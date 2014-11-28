@@ -49,6 +49,10 @@
 	</properties>
 	<repositories>
 		<repository>
+			<id>md5-repo</id>
+			<url>http://repo.md-5.net/content/groups/public/</url>
+		</repository>
+		<repository>
 			<id>bukkit-repo</id>
 			<url>http://repo.bukkit.org/content/groups/public</url>
 		</repository>
@@ -56,18 +60,20 @@
 			<id>comphenix-repo</id>
 			<url>http://repo.comphenix.net/content/groups/public</url>
 		</repository>
-		<repository>
-			<id>md5-repo</id>
-			<url>http://repo.md-5.net/content/groups/public/</url>
-		</repository>
 	</repositories>
 	<dependencies>
 		<dependency>
+			<groupId>org.spigotmc</groupId>
+			<artifactId>spigot</artifactId>
+			<version>1.7.8-R0.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<!--dependency>
 			<groupId>org.bukkit</groupId>
 			<artifactId>bukkit</artifactId>
 			<version>1.7.9-R0.2</version>
 			<scope>provided</scope>
-		</dependency>
+		</dependency-->
 		<dependency>
 			<groupId>com.comphenix.protocol</groupId>
 			<artifactId>ProtocolLib</artifactId>

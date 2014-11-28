@@ -14,4 +14,3 @@ permissions:
   rscd.admin:
     description: Access to all functions
     default: op
- 
