@@ -1,13 +1,10 @@
 package ru.simsonic.rscDisguises;
-import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import me.libraryaddict.disguise.DisguiseAPI;
 import me.libraryaddict.disguise.disguisetypes.Disguise;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import me.libraryaddict.disguise.disguisetypes.MobDisguise;
-import me.libraryaddict.disguise.disguisetypes.PlayerDisguise;
-import me.libraryaddict.disguise.disguisetypes.TargetedDisguise.TargetType;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -23,6 +20,7 @@ public final class Plugin extends JavaPlugin implements Listener
 	public  static final Logger consoleLog = Logger.getLogger("Minecraft");
 	private static final String chatPrefix = "§8[rscDisguises] §7";
 	private Disguise disguise = null;
+	private boolean doDisguises;
 	@Override
 	public void onLoad()
 	{
@@ -33,6 +31,7 @@ public final class Plugin extends JavaPlugin implements Listener
 	public void onEnable()
 	{
 		getServer().getPluginManager().registerEvents(this, this);
+		doDisguises = false;
 		// reloadConfig();
 		consoleLog.log(Level.INFO, chatPrefix + "Plugin has been successfully enabled.");
 	}
@@ -49,6 +48,7 @@ public final class Plugin extends JavaPlugin implements Listener
 			DisguiseAPI.undisguiseToAll(player);
 		if(disguise != null)
 			disguise.removeDisguise();
+		doDisguises = false;
 	}
 	private boolean setupDisguise(String type)
 	{
@@ -169,6 +169,7 @@ public final class Plugin extends JavaPlugin implements Listener
 				// Нет такой маскировки
 				return false;
 		}
+		doDisguises = true;
 		// Применяю её ко всем игрокам на сервере
 		for(Player player : getServer().getOnlinePlayers())
 			DisguiseAPI.disguiseToAll(player, disguise);
@@ -177,7 +178,7 @@ public final class Plugin extends JavaPlugin implements Listener
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event)
 	{
-		if(disguise != null)
+		if(doDisguises && disguise != null)
 			DisguiseAPI.disguiseToAll(event.getPlayer(), disguise);
 	}
 	@EventHandler
