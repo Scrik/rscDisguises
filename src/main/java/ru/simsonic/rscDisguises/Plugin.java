@@ -212,7 +212,9 @@ public final class Plugin extends JavaPlugin implements Listener
 						? "§aУспешно"
 						: "§cНеизвестный тип маскировки"));
 				} else
-					sender.sendMessage(chatPrefix + "Плагин rscDisguises версии " + getDescription().getVersion() + " © SimSonic.");
+					sender.sendMessage(chatPrefix
+						+ "Плагин rscDisguises версии " + getDescription().getVersion()
+						+ " © " + getDescription().getAuthors().get(0) + ".");
 				return true;
 		}
 		return false;
