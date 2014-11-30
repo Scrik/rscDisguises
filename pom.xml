@@ -62,12 +62,12 @@
 		</repository>
 	</repositories>
 	<dependencies>
-		<dependency>
+		<!--dependency>
 			<groupId>org.spigotmc</groupId>
 			<artifactId>spigot</artifactId>
 			<version>1.7.8-R0.1-SNAPSHOT</version>
 			<scope>provided</scope>
-		</dependency>
+		</dependency-->
 		<!--dependency>
 			<groupId>org.bukkit</groupId>
 			<artifactId>bukkit</artifactId>
