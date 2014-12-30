@@ -57,122 +57,22 @@ public final class Plugin extends JavaPlugin implements Listener
 		// Нужна ли новая?
 		if(type == null || "".equals(type))
 			return false;
-		// Если нужна, то какая?
-		switch(type.toUpperCase())
+		// Отмена всех маскировок?
+		if("NONE".equalsIgnoreCase(type))
+			return true;
+		// Если всё-таки нужна, то какая?
+		try
 		{
-			case "BLAZE":
-				disguise = new MobDisguise(DisguiseType.BLAZE);
-				break;
-			case "CAVE_SPIDER":
-				disguise = new MobDisguise(DisguiseType.CAVE_SPIDER);
-				break;
-			case "CHICKEN":
-				disguise = new MobDisguise(DisguiseType.CHICKEN);
-				break;
-			case "COW":
-				disguise = new MobDisguise(DisguiseType.COW);
-				break;
-			case "CREEPER":
-				disguise = new MobDisguise(DisguiseType.CREEPER);
-				break;
-			case "DONKEY":
-				disguise = new MobDisguise(DisguiseType.DONKEY);
-				break;
-			case "ENDER_DRAGON":
-				disguise = new MobDisguise(DisguiseType.ENDER_DRAGON);
-				break;
-			case "ENDERMAN":
-				disguise = new MobDisguise(DisguiseType.ENDERMAN);
-				break;
-			case "GHAST":
-				disguise = new MobDisguise(DisguiseType.GHAST);
-				break;
-			case "GIANT":
-				disguise = new MobDisguise(DisguiseType.GIANT);
-				break;
-			case "HORSE":
-				disguise = new MobDisguise(DisguiseType.HORSE);
-				break;
-			case "IRON_GOLEM":
-				disguise = new MobDisguise(DisguiseType.IRON_GOLEM);
-				break;
-			case "MAGMA_CUBE":
-				disguise = new MobDisguise(DisguiseType.MAGMA_CUBE);
-				break;
-			case "MULE":
-				disguise = new MobDisguise(DisguiseType.MULE);
-				break;
-			case "MUSHROOM_COW":
-				disguise = new MobDisguise(DisguiseType.MUSHROOM_COW);
-				break;
-			case "OCELOT":
-				disguise = new MobDisguise(DisguiseType.OCELOT);
-				break;
-			case "PIG":
-				disguise = new MobDisguise(DisguiseType.PIG);
-				break;
-			case "PIG_ZOMBIE":
-				disguise = new MobDisguise(DisguiseType.PIG_ZOMBIE);
-				break;
-			case "SHEEP":
-				disguise = new MobDisguise(DisguiseType.SHEEP);
-				break;
-			case "SILVERFISH":
-				disguise = new MobDisguise(DisguiseType.SILVERFISH);
-				break;
-			case "SKELETON":
-				disguise = new MobDisguise(DisguiseType.SKELETON);
-				break;
-			case "SKELETON_HORSE":
-				disguise = new MobDisguise(DisguiseType.SKELETON_HORSE);
-				break;
-			case "SLIME":
-				disguise = new MobDisguise(DisguiseType.SLIME);
-				break;
-			case "SNOWMAN":
-				disguise = new MobDisguise(DisguiseType.SNOWMAN);
-				break;
-			case "SPIDER":
-				disguise = new MobDisguise(DisguiseType.SPIDER);
-				break;
-			case "SQUID":
-				disguise = new MobDisguise(DisguiseType.SQUID);
-				break;
-			case "UNDEAD_HORSE":
-				disguise = new MobDisguise(DisguiseType.UNDEAD_HORSE);
-				break;
-			case "VILLAGER":
-				disguise = new MobDisguise(DisguiseType.VILLAGER);
-				break;
-			case "WITCH":
-				disguise = new MobDisguise(DisguiseType.WITCH);
-				break;
-			case "WITHER":
-				disguise = new MobDisguise(DisguiseType.WITHER);
-				break;
-			case "WITHER_SKELETON":
-				disguise = new MobDisguise(DisguiseType.WITHER_SKELETON);
-				break;
-			case "WOLF":
-				disguise = new MobDisguise(DisguiseType.WOLF);
-				break;
-			case "ZOMBIE":
-				disguise = new MobDisguise(DisguiseType.ZOMBIE);
-				break;
-			case "ZOMBIE_VILLAGER":
-				disguise = new MobDisguise(DisguiseType.ZOMBIE_VILLAGER);
-				break;
-			case "NONE":
-				// Отмена всех маскировок
-				return true;
-			default:
-				// Нет такой маскировки
-				return false;
+			// Поиск соответствующей маскировки
+			disguise = new MobDisguise(DisguiseType.valueOf(type.toUpperCase()));
+			// Применяю её ко всем игрокам на сервере
+			doDisguises = true;
+			for(Player player : getServer().getOnlinePlayers())
+				DisguiseAPI.disguiseToAll(player, disguise);
+		} catch(IllegalArgumentException ex) {
+			// Поиск не дал результата — маскировка не существует
+			return false;
 		}
-		doDisguises = true;
-		// Применяю её ко всем игрокам на сервере
-		for(Player player : getServer().getOnlinePlayers())
-			DisguiseAPI.disguiseToAll(player, disguise);
 		return true;
 	}
 	@EventHandler
